@@ -8,7 +8,7 @@ pipeline {
     stage("build") {
       when {
         expression {
-          MY_NAME == 'rony' && BRANCH_NAME=='my'
+          MY_NAME == 'rony' && BRANCH_NAME=='master'
         }
       }
       steps {

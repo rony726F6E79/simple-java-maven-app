@@ -21,7 +21,7 @@ pipeline {
                     echo "That is build image state...."
                     sh 'docker build -t rony726f6e79/my-app:05 .'
                     sh 'echo $PSW | docker login -u $USR --password-stdin'
-                    sh 'docker push build -t rony726f6e79/my-app:05'
+                    sh 'docker push rony726f6e79/my-app:05'
                 }
                 }
             }

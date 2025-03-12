@@ -17,8 +17,8 @@ pipeline {
     }
     stage("test") {
       steps {
-        echo "my git user name $(MY_GIT_USR)"
-        echo "my git user pass $(MY_GIT_PSW)"
+        echo "my git user name ${MY_GIT_USR}"
+        echo "my git user pass ${MY_GIT_PSW}"
       }
     }
     stage("deploy") {

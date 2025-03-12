@@ -1,57 +1,35 @@
 pipeline {
-  agent any
-  environment {
-    MY_NAME = 'Roni'
-  }
-  
-  stages {
-    stage("debug") {
+
+    agent any
+    toots {
+        maven maven-3.9
+    }
+
+    stage("build jar") {
       steps {
         script {
-          echo "Current branch: ${env.BRANCH_NAME}"
+            echo "That is build state..."
+            sh 'mvn package'
         }
       }
     }
     
-    stage("build") {
-      when {
-        expression {
-          echo "Checking condition: MY_NAME=${env.MY_NAME}, BRANCH_NAME=${env.BRANCH_NAME}"
-          return env.MY_NAME == 'Roni' && env.BRANCH_NAME == 'master'
-        }
-      }
-      steps {
-        echo 'build... stepsssssss......'
-      }
-    }
-    
-    stage("test") {
+    stage("build image") {
       steps {
         script {
-          withCredentials([usernamePassword(credentialsId: 'rony-git', usernameVariable: 'MY_GIT_USR', passwordVariable: 'MY_GIT_PSW')]) {
-            echo "my git user name: ${MY_GIT_USR}"
-            echo "my git user pass: ${MY_GIT_PSW}"
+          withCredentials([usernamePassword(credentialsId: 'docker-my', usernameVariable: 'USR', passwordVariable: 'PSW')]) {
+            echo "That is build image state...."
+            sh 'docker build -t rony726f6e79/my-app:05 .'
+            sh 'echo $PSW | docker login -u $USR --password-stdin'
+            sh 'docker push build -t rony726f6e79/my-app:05'
           }
         }
       }
     }
     
     stage("deploy") {
-      steps {
+      steps { 
         echo 'deploy... stepsssssss......'
       }
     }
   }
-  
-  post {
-    always {
-      echo 'always done ...........'
-    }
-    success {
-      echo 'success done ...........'
-    }
-    failure {
-      echo 'failure done ...........'
-    }
-  }
-}

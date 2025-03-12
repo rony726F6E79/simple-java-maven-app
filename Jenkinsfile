@@ -1,7 +1,7 @@
 pipeline {
 
     agent any
-    toots {
+    tools {
         maven maven-3.9
     }
     stages{

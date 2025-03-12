@@ -6,9 +6,9 @@ def buildimages(){
     echo "That is build image state...."
     withCredentials([usernamePassword(credentialsId: 'docker-my', usernameVariable: 'USR', passwordVariable: 'PSW')]) {
         
-        sh 'docker build -t rony726f6e79/my-app:05 .'
+        sh 'docker build -t rony726f6e79/my-app:06 .'
         sh 'echo $PSW | docker login -u $USR --password-stdin'
-        sh 'docker push rony726f6e79/my-app:05'
+        sh 'docker push rony726f6e79/my-app:06'
         }
 }
 def deply(){
